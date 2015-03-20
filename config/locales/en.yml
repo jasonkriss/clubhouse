@@ -1,0 +1,7 @@
+en:
+  clubhouse:
+    mailer:
+      invitation:
+        subject: "You've been invited to join %{organization}"
+        opening: "To accept your invitation, just follow this link:"
+        closing: "If you don't wish to join the organization, simply ignore this email."
