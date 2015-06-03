@@ -1,6 +1,6 @@
 class CreateClubhouseOrganizations < ActiveRecord::Migration
   def change
-    create_table :clubhouse_organizations, id: :uuid, default: "uuid_generate_v1()" do |t|
+    create_table :clubhouse_organizations, id: :uuid do |t|
       t.string :name, null: false, limit: 30
       t.string :email, null: false
 

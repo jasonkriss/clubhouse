@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20150228061007) do
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "clubhouse_invitations", id: :uuid, default: "uuid_generate_v1()", force: :cascade do |t|
+  create_table "clubhouse_invitations", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "organization_id",                 null: false
     t.string   "email",                           null: false
     t.string   "token",                           null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150228061007) do
   add_index "clubhouse_invitations", ["organization_id"], name: "index_clubhouse_invitations_on_organization_id", using: :btree
   add_index "clubhouse_invitations", ["token"], name: "index_clubhouse_invitations_on_token", unique: true, using: :btree
 
-  create_table "clubhouse_memberships", id: :uuid, default: "uuid_generate_v1()", force: :cascade do |t|
+  create_table "clubhouse_memberships", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "member_id",                       null: false
     t.uuid     "organization_id",                 null: false
     t.boolean  "admin",           default: false, null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20150228061007) do
   add_index "clubhouse_memberships", ["member_id"], name: "index_clubhouse_memberships_on_member_id", using: :btree
   add_index "clubhouse_memberships", ["organization_id"], name: "index_clubhouse_memberships_on_organization_id", using: :btree
 
-  create_table "clubhouse_organizations", id: :uuid, default: "uuid_generate_v1()", force: :cascade do |t|
+  create_table "clubhouse_organizations", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name",       limit: 30, null: false
     t.string   "email",                 null: false
     t.datetime "created_at",            null: false
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20150228061007) do
   add_index "pollett_contexts", ["revoked_at"], name: "index_pollett_contexts_on_revoked_at", using: :btree
   add_index "pollett_contexts", ["user_id"], name: "index_pollett_contexts_on_user_id", using: :btree
 
-  create_table "users", id: :uuid, default: "uuid_generate_v1()", force: :cascade do |t|
+  create_table "users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name",            null: false
     t.string   "email",           null: false
     t.string   "password_digest", null: false

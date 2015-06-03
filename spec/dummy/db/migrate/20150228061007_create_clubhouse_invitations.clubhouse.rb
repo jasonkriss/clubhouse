@@ -1,7 +1,7 @@
 # This migration comes from clubhouse (originally 20150228055036)
 class CreateClubhouseInvitations < ActiveRecord::Migration
   def change
-    create_table :clubhouse_invitations, id: :uuid, default: "uuid_generate_v1()" do |t|
+    create_table :clubhouse_invitations, id: :uuid do |t|
       t.uuid :organization_id, null: false
       t.string :email, null: false
       t.string :token, null: false
