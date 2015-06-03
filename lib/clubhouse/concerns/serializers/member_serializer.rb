@@ -6,6 +6,7 @@ module Clubhouse
 
         included do
           attributes :id,
+                     :type,
                      :email,
                      :created_at,
                      :updated_at

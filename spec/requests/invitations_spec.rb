@@ -16,14 +16,12 @@ describe "Invitations" do
 
     it "responds with the organization's invitations" do
       a_get("/organizations/#{organization.id}/invitations", session)
-      invitations = json[:invitations]
-      first = invitations.first
 
       expect_status(200)
-      expect(invitations.count).to eq(1)
-      expect(first[:id]).to eq(existing.id)
-      expect(first[:organization][:id]).to eq(organization.id)
-      expect_keys(first, :email, :admin, :created_at, :updated_at)
+      expect(data.count).to eq(1)
+      expect(data.first[:id]).to eq(existing.id)
+      expect(data.first[:links][:organization][:linkage][:id]).to eq(organization.id)
+      expect_keys(data.first, :email, :admin, :created_at, :updated_at)
     end
   end
 
@@ -36,14 +34,12 @@ describe "Invitations" do
 
     it "responds with the organization's invitations" do
       a_get("/organizations/#{organization.name}/invitations", session)
-      invitations = json[:invitations]
-      first = invitations.first
 
       expect_status(200)
-      expect(invitations.count).to eq(1)
-      expect(first[:id]).to eq(existing.id)
-      expect(first[:organization][:id]).to eq(organization.id)
-      expect_keys(first, :email, :admin, :created_at, :updated_at)
+      expect(data.count).to eq(1)
+      expect(data.first[:id]).to eq(existing.id)
+      expect(data.first[:links][:organization][:linkage][:id]).to eq(organization.id)
+      expect_keys(data.first, :email, :admin, :created_at, :updated_at)
     end
   end
 
@@ -55,13 +51,12 @@ describe "Invitations" do
     context "when params are valid" do
       it "responds with the new invitation" do
         a_post("/organizations/#{organization.id}/invitations", session, params)
-        invitation = json[:invitation]
 
         expect_status(201)
-        expect(invitation[:email]).to eq("email@example.com")
-        expect(invitation[:admin]).to eq(true)
-        expect(invitation[:organization][:id]).to eq(organization.id)
-        expect_keys(invitation, :id, :created_at, :updated_at)
+        expect(data[:email]).to eq("email@example.com")
+        expect(data[:admin]).to eq(true)
+        expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
+        expect_keys(data, :id, :created_at, :updated_at)
       end
 
       it "sends email" do
@@ -91,13 +86,12 @@ describe "Invitations" do
     context "when params are valid" do
       it "responds with the new invitation" do
         a_post("/organizations/#{organization.name}/invitations", session, params)
-        invitation = json[:invitation]
 
         expect_status(201)
-        expect(invitation[:email]).to eq("email@example.com")
-        expect(invitation[:admin]).to eq(true)
-        expect(invitation[:organization][:id]).to eq(organization.id)
-        expect_keys(invitation, :id, :created_at, :updated_at)
+        expect(data[:email]).to eq("email@example.com")
+        expect(data[:admin]).to eq(true)
+        expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
+        expect_keys(data, :id, :created_at, :updated_at)
       end
 
       it "sends email" do
@@ -124,12 +118,11 @@ describe "Invitations" do
 
     it "responds with the specified invitation" do
       a_get("/invitations/#{existing.id}", session)
-      invitation = json[:invitation]
 
       expect_status(200)
-      expect(invitation[:id]).to eq(existing.id)
-      expect(invitation[:organization][:id]).to eq(organization.id)
-      expect_keys(invitation, :email, :admin, :created_at, :updated_at)
+      expect(data[:id]).to eq(existing.id)
+      expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
+      expect_keys(data, :email, :admin, :created_at, :updated_at)
     end
   end
 
@@ -140,12 +133,11 @@ describe "Invitations" do
 
     it "responds with the updated invitation" do
       a_put("/invitations/#{existing.id}", session, params)
-      invitation = json[:invitation]
 
       expect_status(200)
-      expect(invitation[:id]).to eq(existing.id)
-      expect(invitation[:admin]).to eq(true)
-      expect_keys(invitation, :organization, :email, :created_at, :updated_at)
+      expect(data[:id]).to eq(existing.id)
+      expect(data[:admin]).to eq(true)
+      expect_keys(data, :email, :created_at, :updated_at)
     end
   end
 

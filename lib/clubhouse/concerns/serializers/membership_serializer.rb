@@ -6,12 +6,13 @@ module Clubhouse
 
         included do
           attributes :id,
+                     :type,
                      :admin,
                      :created_at,
                      :updated_at
 
-          has_one :organization
-          has_one :member, serializer: Clubhouse::MemberSerializer
+          belongs_to :organization
+          belongs_to :member, serializer: Clubhouse::MemberSerializer
         end
       end
     end

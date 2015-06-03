@@ -13,12 +13,10 @@ describe "Memberships" do
 
     it "responds with the organization's memberships" do
       a_get("/organizations/#{organization.id}/memberships", session)
-      memberships = json[:memberships]
-      first = memberships.first
 
       expect_status(200)
-      expect(memberships.count).to eq(2)
-      expect_keys(first, :id, :admin, :member, :organization, :created_at, :updated_at)
+      expect(data.count).to eq(2)
+      expect_keys(data.first, :id, :admin, :created_at, :updated_at)
     end
   end
 
@@ -27,12 +25,10 @@ describe "Memberships" do
 
     it "responds with the organization's memberships" do
       a_get("/organizations/#{organization.name}/memberships", session)
-      memberships = json[:memberships]
-      first = memberships.first
 
       expect_status(200)
-      expect(memberships.count).to eq(2)
-      expect_keys(first, :id, :admin, :member, :organization, :created_at, :updated_at)
+      expect(data.count).to eq(2)
+      expect_keys(data.first, :id, :admin, :created_at, :updated_at)
     end
   end
 
@@ -47,13 +43,12 @@ describe "Memberships" do
     context "when token is valid" do
       it "responds with the new membership" do
         a_post("/organizations/#{organization.id}/memberships", new_session, params)
-        membership = json[:membership]
 
         expect_status(201)
-        expect(membership[:admin]).to eq(true)
-        expect(membership[:member][:id]).to eq(new_user.id)
-        expect(membership[:organization][:id]).to eq(organization.id)
-        expect_keys(membership, :id, :created_at, :updated_at)
+        expect(data[:admin]).to eq(true)
+        expect(data[:links][:member][:linkage][:id]).to eq(new_user.id)
+        expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
+        expect_keys(data, :id, :created_at, :updated_at)
       end
     end
 
@@ -79,13 +74,12 @@ describe "Memberships" do
     context "when token is valid" do
       it "responds with the new membership" do
         a_post("/organizations/#{organization.name}/memberships", new_session, params)
-        membership = json[:membership]
 
         expect_status(201)
-        expect(membership[:admin]).to eq(true)
-        expect(membership[:member][:id]).to eq(new_user.id)
-        expect(membership[:organization][:id]).to eq(organization.id)
-        expect_keys(membership, :id, :created_at, :updated_at)
+        expect(data[:admin]).to eq(true)
+        expect(data[:links][:member][:linkage][:id]).to eq(new_user.id)
+        expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
+        expect_keys(data, :id, :created_at, :updated_at)
       end
     end
 
@@ -105,11 +99,10 @@ describe "Memberships" do
 
     it "responds with the specified membership" do
       a_get("/memberships/#{existing.id}", session)
-      membership = json[:membership]
 
       expect_status(200)
-      expect(membership[:id]).to eq(existing.id)
-      expect_keys(membership, :admin, :member, :organization, :created_at, :updated_at)
+      expect(data[:id]).to eq(existing.id)
+      expect_keys(data, :admin, :created_at, :updated_at)
     end
   end
 
@@ -120,12 +113,11 @@ describe "Memberships" do
 
     it "responds with the updated membership" do
       a_put("/memberships/#{other_membership.id}", session, params)
-      membership = json[:membership]
 
       expect_status(200)
-      expect(membership[:id]).to eq(other_membership.id)
-      expect(membership[:admin]).to eq(true)
-      expect_keys(membership, :member, :organization, :created_at, :updated_at)
+      expect(data[:id]).to eq(other_membership.id)
+      expect(data[:admin]).to eq(true)
+      expect_keys(data, :created_at, :updated_at)
     end
   end
 

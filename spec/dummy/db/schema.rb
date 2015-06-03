@@ -51,9 +51,10 @@ ActiveRecord::Schema.define(version: 20150228061007) do
 
   add_index "clubhouse_organizations", ["name"], name: "index_clubhouse_organizations_on_name", unique: true, using: :btree
 
-  create_table "pollett_sessions", id: :uuid, default: "uuid_generate_v1()", force: :cascade do |t|
+  create_table "pollett_contexts", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "type",        null: false
     t.uuid     "user_id",     null: false
-    t.string   "token",       null: false
+    t.string   "client",      null: false
     t.datetime "revoked_at"
     t.datetime "accessed_at"
     t.string   "ip"
@@ -62,12 +63,12 @@ ActiveRecord::Schema.define(version: 20150228061007) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "pollett_sessions", ["accessed_at"], name: "index_pollett_sessions_on_accessed_at", using: :btree
-  add_index "pollett_sessions", ["revoked_at"], name: "index_pollett_sessions_on_revoked_at", using: :btree
-  add_index "pollett_sessions", ["token"], name: "index_pollett_sessions_on_token", unique: true, using: :btree
-  add_index "pollett_sessions", ["user_id"], name: "index_pollett_sessions_on_user_id", using: :btree
+  add_index "pollett_contexts", ["accessed_at"], name: "index_pollett_contexts_on_accessed_at", using: :btree
+  add_index "pollett_contexts", ["revoked_at"], name: "index_pollett_contexts_on_revoked_at", using: :btree
+  add_index "pollett_contexts", ["user_id"], name: "index_pollett_contexts_on_user_id", using: :btree
 
   create_table "users", id: :uuid, default: "uuid_generate_v1()", force: :cascade do |t|
+    t.string   "name",            null: false
     t.string   "email",           null: false
     t.string   "password_digest", null: false
     t.string   "reset_token"
@@ -81,5 +82,5 @@ ActiveRecord::Schema.define(version: 20150228061007) do
   add_foreign_key "clubhouse_invitations", "clubhouse_organizations", column: "organization_id", on_delete: :cascade
   add_foreign_key "clubhouse_memberships", "clubhouse_organizations", column: "organization_id", on_delete: :cascade
   add_foreign_key "clubhouse_memberships", "users", column: "member_id", on_delete: :cascade
-  add_foreign_key "pollett_sessions", "users", on_delete: :cascade
+  add_foreign_key "pollett_contexts", "users", on_delete: :cascade
 end

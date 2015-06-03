@@ -6,12 +6,13 @@ module Clubhouse
 
         included do
           attributes :id,
+                     :type,
                      :email,
                      :admin,
                      :created_at,
                      :updated_at
 
-          has_one :organization
+          belongs_to :organization
         end
       end
     end

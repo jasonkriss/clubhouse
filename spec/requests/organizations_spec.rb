@@ -15,13 +15,11 @@ describe "Organizations" do
 
     it "responds with the authenticated user's organizations" do
       a_get("/organizations", session)
-      organizations = json[:organizations]
-      first = organizations.first
 
       expect_status(200)
-      expect(organizations.count).to eq(1)
-      expect(first[:id]).to eq(existing.id)
-      expect_keys(first, :name, :email, :created_at, :updated_at)
+      expect(data.count).to eq(1)
+      expect(data.first[:id]).to eq(existing.id)
+      expect_keys(data.first, :name, :email, :created_at, :updated_at)
     end
   end
 
@@ -50,11 +48,10 @@ describe "Organizations" do
 
     it "responds with the specified organization" do
       a_get("/organizations/#{existing.id}", session)
-      organization = json[:organization]
 
       expect_status(200)
-      expect(organization[:id]).to eq(existing.id)
-      expect_keys(organization, :name, :email, :created_at, :updated_at)
+      expect(data[:id]).to eq(existing.id)
+      expect_keys(data, :name, :email, :created_at, :updated_at)
     end
   end
 
@@ -63,11 +60,10 @@ describe "Organizations" do
 
     it "responds with the specified organization" do
       a_get("/organizations/#{existing.name}", session)
-      organization = json[:organization]
 
       expect_status(200)
-      expect(organization[:id]).to eq(existing.id)
-      expect_keys(organization, :name, :email, :created_at, :updated_at)
+      expect(data[:id]).to eq(existing.id)
+      expect_keys(data, :name, :email, :created_at, :updated_at)
     end
   end
 
@@ -79,12 +75,11 @@ describe "Organizations" do
     context "with valid params" do
       it "responds with the new organization" do
         a_post("/organizations", session, params)
-        organization = json[:organization]
 
         expect_status(201)
-        expect(organization[:name]).to eq("name")
-        expect(organization[:email]).to eq("email@example.com")
-        expect_keys(organization, :id, :created_at, :updated_at)
+        expect(data[:name]).to eq("name")
+        expect(data[:email]).to eq("email@example.com")
+        expect_keys(data, :id, :created_at, :updated_at)
       end
     end
 
@@ -107,13 +102,12 @@ describe "Organizations" do
     context "with valid params" do
       it "responds with the updated organization" do
         a_put("/organizations/#{existing.id}", session, params)
-        organization = json[:organization]
 
         expect_status(200)
-        expect(organization[:id]).to eq(existing.id)
-        expect(organization[:name]).to eq("new-name")
-        expect(organization[:email]).to eq("newemail@example.com")
-        expect_keys(organization, :created_at, :updated_at)
+        expect(data[:id]).to eq(existing.id)
+        expect(data[:name]).to eq("new-name")
+        expect(data[:email]).to eq("newemail@example.com")
+        expect_keys(data, :created_at, :updated_at)
       end
     end
 
@@ -136,13 +130,12 @@ describe "Organizations" do
     context "with valid params" do
       it "responds with the updated organization" do
         a_put("/organizations/#{existing.name}", session, params)
-        organization = json[:organization]
 
         expect_status(200)
-        expect(organization[:id]).to eq(existing.id)
-        expect(organization[:name]).to eq("new-name")
-        expect(organization[:email]).to eq("newemail@example.com")
-        expect_keys(organization, :created_at, :updated_at)
+        expect(data[:id]).to eq(existing.id)
+        expect(data[:name]).to eq("new-name")
+        expect(data[:email]).to eq("newemail@example.com")
+        expect_keys(data, :created_at, :updated_at)
       end
     end
 
