@@ -20,8 +20,8 @@ describe "Invitations" do
       expect_status(200)
       expect(data.count).to eq(1)
       expect(data.first[:id]).to eq(existing.id)
-      expect(data.first[:links][:organization][:linkage][:id]).to eq(organization.id)
-      expect_keys(data.first, :email, :admin, :created_at, :updated_at)
+      expect(data.first[:relationships][:organization][:data][:id]).to eq(organization.id)
+      expect_keys(data.first[:attributes], :email, :admin, :created_at, :updated_at)
     end
   end
 
@@ -38,8 +38,8 @@ describe "Invitations" do
       expect_status(200)
       expect(data.count).to eq(1)
       expect(data.first[:id]).to eq(existing.id)
-      expect(data.first[:links][:organization][:linkage][:id]).to eq(organization.id)
-      expect_keys(data.first, :email, :admin, :created_at, :updated_at)
+      expect(data.first[:relationships][:organization][:data][:id]).to eq(organization.id)
+      expect_keys(data.first[:attributes], :email, :admin, :created_at, :updated_at)
     end
   end
 
@@ -53,10 +53,10 @@ describe "Invitations" do
         a_post("/organizations/#{organization.id}/invitations", session, params)
 
         expect_status(201)
-        expect(data[:email]).to eq("email@example.com")
-        expect(data[:admin]).to eq(true)
-        expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
-        expect_keys(data, :id, :created_at, :updated_at)
+        expect(data[:attributes][:email]).to eq("email@example.com")
+        expect(data[:attributes][:admin]).to eq(true)
+        expect(data[:relationships][:organization][:data][:id]).to eq(organization.id)
+        expect_keys(data[:attributes], :created_at, :updated_at)
       end
 
       it "sends email" do
@@ -88,10 +88,10 @@ describe "Invitations" do
         a_post("/organizations/#{organization.name}/invitations", session, params)
 
         expect_status(201)
-        expect(data[:email]).to eq("email@example.com")
-        expect(data[:admin]).to eq(true)
-        expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
-        expect_keys(data, :id, :created_at, :updated_at)
+        expect(data[:attributes][:email]).to eq("email@example.com")
+        expect(data[:attributes][:admin]).to eq(true)
+        expect(data[:relationships][:organization][:data][:id]).to eq(organization.id)
+        expect_keys(data[:attributes], :created_at, :updated_at)
       end
 
       it "sends email" do
@@ -121,8 +121,8 @@ describe "Invitations" do
 
       expect_status(200)
       expect(data[:id]).to eq(existing.id)
-      expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
-      expect_keys(data, :email, :admin, :created_at, :updated_at)
+      expect(data[:relationships][:organization][:data][:id]).to eq(organization.id)
+      expect_keys(data[:attributes], :email, :admin, :created_at, :updated_at)
     end
   end
 
@@ -136,8 +136,8 @@ describe "Invitations" do
 
       expect_status(200)
       expect(data[:id]).to eq(existing.id)
-      expect(data[:admin]).to eq(true)
-      expect_keys(data, :email, :created_at, :updated_at)
+      expect(data[:attributes][:admin]).to eq(true)
+      expect_keys(data[:attributes], :email, :created_at, :updated_at)
     end
   end
 

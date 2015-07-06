@@ -16,7 +16,7 @@ describe "Memberships" do
 
       expect_status(200)
       expect(data.count).to eq(2)
-      expect_keys(data.first, :id, :admin, :created_at, :updated_at)
+      expect_keys(data.first[:attributes], :admin, :created_at, :updated_at)
     end
   end
 
@@ -28,7 +28,7 @@ describe "Memberships" do
 
       expect_status(200)
       expect(data.count).to eq(2)
-      expect_keys(data.first, :id, :admin, :created_at, :updated_at)
+      expect_keys(data.first[:attributes], :admin, :created_at, :updated_at)
     end
   end
 
@@ -45,10 +45,10 @@ describe "Memberships" do
         a_post("/organizations/#{organization.id}/memberships", new_session, params)
 
         expect_status(201)
-        expect(data[:admin]).to eq(true)
-        expect(data[:links][:member][:linkage][:id]).to eq(new_user.id)
-        expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
-        expect_keys(data, :id, :created_at, :updated_at)
+        expect(data[:attributes][:admin]).to eq(true)
+        expect(data[:relationships][:member][:data][:id]).to eq(new_user.id)
+        expect(data[:relationships][:organization][:data][:id]).to eq(organization.id)
+        expect_keys(data[:attributes], :created_at, :updated_at)
       end
     end
 
@@ -76,10 +76,10 @@ describe "Memberships" do
         a_post("/organizations/#{organization.name}/memberships", new_session, params)
 
         expect_status(201)
-        expect(data[:admin]).to eq(true)
-        expect(data[:links][:member][:linkage][:id]).to eq(new_user.id)
-        expect(data[:links][:organization][:linkage][:id]).to eq(organization.id)
-        expect_keys(data, :id, :created_at, :updated_at)
+        expect(data[:attributes][:admin]).to eq(true)
+        expect(data[:relationships][:member][:data][:id]).to eq(new_user.id)
+        expect(data[:relationships][:organization][:data][:id]).to eq(organization.id)
+        expect_keys(data[:attributes], :created_at, :updated_at)
       end
     end
 
@@ -102,7 +102,7 @@ describe "Memberships" do
 
       expect_status(200)
       expect(data[:id]).to eq(existing.id)
-      expect_keys(data, :admin, :created_at, :updated_at)
+      expect_keys(data[:attributes], :admin, :created_at, :updated_at)
     end
   end
 
@@ -116,8 +116,8 @@ describe "Memberships" do
 
       expect_status(200)
       expect(data[:id]).to eq(other_membership.id)
-      expect(data[:admin]).to eq(true)
-      expect_keys(data, :created_at, :updated_at)
+      expect(data[:attributes][:admin]).to eq(true)
+      expect_keys(data[:attributes], :created_at, :updated_at)
     end
   end
 

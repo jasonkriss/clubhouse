@@ -5,9 +5,7 @@ module Clubhouse
         extend ActiveSupport::Concern
 
         included do
-          attributes :id,
-                     :type,
-                     :email,
+          attributes :email,
                      :admin,
                      :created_at,
                      :updated_at

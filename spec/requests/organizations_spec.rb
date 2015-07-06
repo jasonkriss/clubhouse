@@ -19,7 +19,7 @@ describe "Organizations" do
       expect_status(200)
       expect(data.count).to eq(1)
       expect(data.first[:id]).to eq(existing.id)
-      expect_keys(data.first, :name, :email, :created_at, :updated_at)
+      expect_keys(data.first[:attributes], :name, :email, :created_at, :updated_at)
     end
   end
 
@@ -51,7 +51,7 @@ describe "Organizations" do
 
       expect_status(200)
       expect(data[:id]).to eq(existing.id)
-      expect_keys(data, :name, :email, :created_at, :updated_at)
+      expect_keys(data[:attributes], :name, :email, :created_at, :updated_at)
     end
   end
 
@@ -63,7 +63,7 @@ describe "Organizations" do
 
       expect_status(200)
       expect(data[:id]).to eq(existing.id)
-      expect_keys(data, :name, :email, :created_at, :updated_at)
+      expect_keys(data[:attributes], :name, :email, :created_at, :updated_at)
     end
   end
 
@@ -77,9 +77,9 @@ describe "Organizations" do
         a_post("/organizations", session, params)
 
         expect_status(201)
-        expect(data[:name]).to eq("name")
-        expect(data[:email]).to eq("email@example.com")
-        expect_keys(data, :id, :created_at, :updated_at)
+        expect(data[:attributes][:name]).to eq("name")
+        expect(data[:attributes][:email]).to eq("email@example.com")
+        expect_keys(data[:attributes], :created_at, :updated_at)
       end
     end
 
@@ -105,9 +105,9 @@ describe "Organizations" do
 
         expect_status(200)
         expect(data[:id]).to eq(existing.id)
-        expect(data[:name]).to eq("new-name")
-        expect(data[:email]).to eq("newemail@example.com")
-        expect_keys(data, :created_at, :updated_at)
+        expect(data[:attributes][:name]).to eq("new-name")
+        expect(data[:attributes][:email]).to eq("newemail@example.com")
+        expect_keys(data[:attributes], :created_at, :updated_at)
       end
     end
 
@@ -133,9 +133,9 @@ describe "Organizations" do
 
         expect_status(200)
         expect(data[:id]).to eq(existing.id)
-        expect(data[:name]).to eq("new-name")
-        expect(data[:email]).to eq("newemail@example.com")
-        expect_keys(data, :created_at, :updated_at)
+        expect(data[:attributes][:name]).to eq("new-name")
+        expect(data[:attributes][:email]).to eq("newemail@example.com")
+        expect_keys(data[:attributes], :created_at, :updated_at)
       end
     end
 
