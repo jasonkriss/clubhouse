@@ -9,9 +9,8 @@ Gem::Specification.new do |s|
   s.version     = Clubhouse::VERSION
   s.authors     = ["Jason Kriss"]
   s.email       = ["jasonkriss@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Clubhouse."
-  s.description = "TODO: Description of Clubhouse."
+  s.homepage    = "https://github.com/jasonkriss/clubhouse"
+  s.summary     = "Organizations and memberships for your Rails API"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
