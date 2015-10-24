@@ -1,7 +1,7 @@
 Clubhouse::Engine.routes.draw do
   scope shallow: true, format: false do
     resources :organizations, except: [:new, :edit] do
-      match ":id", action: :check, on: :collection, via: :head
+      get :check, on: :member
 
       resources :invitations, except: [:new, :edit]
 

@@ -21,8 +21,9 @@ module Clubhouse
         end
 
         def check
-          authorize!(fetch_organization)
-          head :ok
+          skip_authorization
+
+          head :ok if Organization.validate_attributes!(name: params[:id])
         end
 
         def show

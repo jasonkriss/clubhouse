@@ -5,6 +5,7 @@ module Clubhouse
         extend ActiveSupport::Concern
 
         include Emailable
+        include AttributeValidatable
 
         NAME_REGEX = /\A[a-z][a-z\d\-]*\z/
 
@@ -34,6 +35,7 @@ module Clubhouse
             field = Clubhouse.is_id?(id_or_name) ? :id : :name
             where(field => id_or_name)
           end
+
         end
 
         def member?(member)

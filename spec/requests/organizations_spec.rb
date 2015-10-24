@@ -23,22 +23,30 @@ describe "Organizations" do
     end
   end
 
-  describe "HEAD /organizations/:name" do
-    it_requires_authentication(:head, "/organizations/name")
+  describe "GET /organizations/:name/check" do
+    it_requires_authentication(:get, "/organizations/name/check")
 
     context "when name is taken" do
-      it "responds with ok" do
-        a_head("/organizations/#{existing.name}", session)
+      it "responds with unprocessable" do
+        a_get("/organizations/#{existing.name}/check", session)
 
-        expect_status(200)
+        expect_status(422)
+      end
+    end
+
+    context "when name is invalid" do
+      it "responds with unprocessable" do
+        a_get("/organization/#{'a' * 31}/check", session)
+
+        expect_status(422)
       end
     end
 
     context "when name is available" do
-      it "responds with not found" do
-        expect do
-          a_head("/organizations/available", session)
-        end.to raise_error(ActiveRecord::RecordNotFound)
+      it "responds with ok" do
+        a_get("/organizations/available/check", session)
+
+        expect_status(200)
       end
     end
   end
