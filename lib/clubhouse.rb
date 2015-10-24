@@ -15,10 +15,6 @@ module Clubhouse
       !!(ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Uuid::ACCEPTABLE_UUID =~ value)
     end
 
-    def normalize_name(name)
-      name.to_s.downcase.gsub(/\s+/, "-")
-    end
-
     def normalize_email(email)
       email.to_s.downcase.gsub(/\s+/, "")
     end

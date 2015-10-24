@@ -8,17 +8,16 @@ module Clubhouse
         include AttributeValidatable
 
         NAME_REGEX = /\A[a-z][a-z\d\-]*\z/
+        FORMAT_MESSAGE = "can only contain lowercase letters, numbers, and dashes"
 
         included do
           has_many :invitations
           has_many :memberships
           has_many :members, through: :memberships, class_name: Clubhouse.config.member_model
 
-          before_validation :normalize_name
-
           validates :name, presence: true,
                            length: { maximum: 30 },
-                           format: NAME_REGEX,
+                           format: { with: NAME_REGEX, message: FORMAT_MESSAGE },
                            uniqueness: true
         end
 
@@ -44,11 +43,6 @@ module Clubhouse
 
         def admin?(member)
           memberships.exists?(admin: true, member: member)
-        end
-
-        private
-        def normalize_name
-          self.name = Clubhouse.normalize_name(name)
         end
       end
     end
