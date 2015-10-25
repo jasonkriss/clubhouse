@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    clubhouse (0.2.0)
+    clubhouse (0.3.0)
       active_model_serializers (= 0.10.0.rc2)
       email_validator
       pg
